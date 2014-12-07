@@ -1,7 +1,6 @@
 import edu.arizona.sista.processors.corenlp.CoreNLPProcessor
 import edu.stanford.nlp.classify.{LinearClassifier, Dataset, LinearClassifierFactory}
 import edu.stanford.nlp.ling.BasicDatum
-import edu.stanford.nlp.stats.Counters
 
 import scala.collection.JavaConverters._
 import scala.io.Source
@@ -64,7 +63,7 @@ class TextClassifier(trainingFile: String) {
     proc.tagPartsOfSpeech(doc)        // Adjective, noun, verb?  See Penn Treebank tags: http://www.ling.upenn.edu/courses/Fall_2007/ling001/penn_treebank_pos.html
     proc.lemmatize(doc)               // Smart stemming of words:  tomato == tomatoes, am == is == are, have == had
 
-    new BasicDatum[Classification, String](featureFactory.createFeatures(doc))
+    new BasicDatum[Classification, String](FeatureFactory.createFeatures(doc).asJavaCollection)
   }
 
 
