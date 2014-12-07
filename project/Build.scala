@@ -1,6 +1,5 @@
+import sbt.Keys._
 import sbt._
-import Process._
-import Keys._
 
 object Resolvers {
   val sunrepo    = "Sun Maven2 Repo" at "http://download.java.net/maven/2"
