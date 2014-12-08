@@ -1,9 +1,12 @@
+import java.util.Calendar
+
 import edu.arizona.sista.processors.corenlp.CoreNLPProcessor
 import edu.stanford.nlp.classify.{LinearClassifier, Dataset, LinearClassifierFactory}
 import edu.stanford.nlp.ling.BasicDatum
 
 import scala.collection.JavaConverters._
 import scala.io.Source
+import scala.util.Random
 
 /**
  * Build a classifier from a tab-delimited file.
@@ -24,14 +27,16 @@ class TextClassifier(trainingFile: String) {
   def build(file: String) = {
 
     // Read in gold-set and annotate each example
-    val goldSet = Source.fromFile("myfile.txt").getLines().map(_.split("\t")).map { line =>
+    var goldSet = Source.fromFile(file).getLines().map(_.split("\t")).map { line =>
       val (tag, content) = (line(0), line(1))
       val datum = createDatum(content)
       datum.setLabel(tag)
       (tag, content, datum)
-    }
+    }.toList
 
     // Split into training (80%) vs. test (20%) sets
+    Random.setSeed(Calendar.getInstance().getTimeInMillis)
+    goldSet = Random.shuffle(goldSet)
     val split = (goldSet.size * 0.80).toInt
     val training = new Dataset[Classification, String](split)
     goldSet.take(split).foreach(d => training.add(d._3))
@@ -51,7 +56,7 @@ class TextClassifier(trainingFile: String) {
                              .map(e => e.getKey -> e.getValue).toList.sortBy(_._2).reverse
       scores.head._1 == tag
     }
-    System.out.println("Accuracy: %01.1f%%".format(correct.toDouble / test.size))
+    System.out.println("Accuracy: %01.1f%%".format(100.0 * correct / test.size))
 
     classifier
   }
@@ -71,6 +76,6 @@ class TextClassifier(trainingFile: String) {
   def classify(s: String): (Classification, Double) = {
     val counter = textClassifier.probabilityOf(createDatum(s))
     val scores  = counter.entrySet().asScala.map(e => e.getKey -> e.getValue).toList.sortBy(_._2).reverse
-    scores.head
+    (scores.head._1, scores.head._2.toDouble)
   }
 }

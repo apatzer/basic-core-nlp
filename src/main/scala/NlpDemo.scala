@@ -9,6 +9,6 @@ object NlpDemo {
     val query = "Recipes for tomato soup"
     val textClassifier = new TextClassifier(file)
     val (classification, probability) = textClassifier.classify(query)
-    System.out.println(s"Q: $query\nClassification: $classification\nProbability: %01.1f%%".format(probability))
+    System.out.println(s"Q: $query\nClassification: $classification\nProbability: %01.1f%%".format(100 * probability))
   }
 }

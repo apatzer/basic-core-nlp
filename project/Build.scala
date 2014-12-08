@@ -9,7 +9,7 @@ object Resolvers {
 }
 
 object Build extends sbt.Build {
-  lazy val root = (project in file(".")).
+  lazy val nlp = (project in file(".")).
     settings(
       name := "nlp",
       resolvers ++= Resolvers.resolvers,

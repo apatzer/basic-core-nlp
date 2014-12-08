@@ -21,7 +21,7 @@ object FeatureFactory {
 
   def createFeatures(doc: Document): Set[String] = {
     creators.filter(_.hasDocumentFeatures).map(_.createFeatures(doc)).flatten.toSet ++
-    doc.sentences.flatten { sentence =>
+    doc.sentences.toList.flatten { sentence =>
       creators.filter(_.hasSentenceFeatures).map(_.createFeatures(sentence)).flatten
     }.toSet
   }
@@ -31,7 +31,7 @@ object Util {
   /* Classic short word stop words list */
   val stopWords = Set("a", "an", "and", "are", "as", "at", "be", "by", "did", "for", "from", "has", "he",
     "i", "in", "is", "it", "its", "of", "on", "that", "the", "to", "was", "were", "will", "with",
-    "hi", "hello", "question", "answer"
+    "hi", "hello", "question", "answer", "?", "'s"
   )
 
   /* Filter out stop words */
@@ -79,7 +79,6 @@ object WordPairFeature extends FeatureCreator {
     }
     r
   }
-
 
   /**
    * Only create word pairs for combinations of nouns, verbs, and adjectives:
