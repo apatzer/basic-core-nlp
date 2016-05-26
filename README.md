@@ -3,12 +3,12 @@ basic-open-nlp
 
 Classify text using Stanford's Open NLP with Sista NLP Scala wrappers
 
-This basic system takes in a text file which each line in tab-delimited format {class document_text}:
+This basic system takes in a text file with each line in tab-delimited format {class document_text}:
 training.txt
 ```
 ...
-Cooking  How do a make a good tomato sauce for pizza?
-Gardening  My are my cherry tomatoes dying?
+Cooking  How do I make a good tomato sauce for pizza?
+Gardening  Why are my cherry tomatoes dying?
 ```
 
 Instantiate via

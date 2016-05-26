@@ -12,8 +12,8 @@ import scala.util.Random
  * Build a classifier from a tab-delimited file.
  *
  * ...
- * Cooking  How do a make a good tomato sauce for pizza?
- * Gardening  My are my cherry tomatoes dying?
+ * Cooking  How do I make a good tomato sauce for pizza?
+ * Gardening  Why are my cherry tomatoes dying?
  * ...
  *
  * Created by apatzer on 12/7/14.
