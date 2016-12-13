@@ -35,7 +35,7 @@ class TextClassifier(trainingFile: String) {
     }.toList
 
     // Split into training (80%) vs. test (20%) sets
-    Random.setSeed(Calendar.getInstance().getTimeInMillis)
+    Random.setSeed(123)
     goldSet = Random.shuffle(goldSet)
     val split = (goldSet.size * 0.80).toInt
     val training = new Dataset[Classification, String](split)
