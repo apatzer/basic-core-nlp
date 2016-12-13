@@ -11,16 +11,13 @@ import scala.collection.mutable
  */
 trait FeatureCreator {
   def hasSentenceFeatures: Boolean = true
-  def hasDocumentFeatures: Boolean = false
   def createFeatures(sentence: Sentence): Iterable[String]
-  def createFeatures(doc: Document): Iterable[String] = Set.empty
 }
 
 object FeatureFactory {
   protected val creators = List(WordFeature, LowerCaseLemmaFeature, WordPairFeature)
 
   def createFeatures(doc: Document): Set[String] = {
-    creators.filter(_.hasDocumentFeatures).flatMap(_.createFeatures(doc)).toSet ++
     doc.sentences.toList.flatten { sentence =>
       creators.filter(_.hasSentenceFeatures).flatMap(_.createFeatures(sentence))
     }.toSet
