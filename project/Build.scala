@@ -13,7 +13,7 @@ object Build extends sbt.Build {
     settings(
       name := "nlp",
       resolvers ++= Resolvers.resolvers,
-      libraryDependencies ++= Seq("edu.stanford.nlp" % "stanford-corenlp" % "3.3.0",
-                                  "edu.arizona.sista" % "processors" % "2.2")
+      libraryDependencies ++= Seq("edu.stanford.nlp" % "stanford-corenlp" % "3.6.0" classifier "models",
+                                  "edu.arizona.sista" % "processors" % "3.3")
     )
 }

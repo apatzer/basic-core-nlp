@@ -20,9 +20,9 @@ object FeatureFactory {
   protected val creators = List(WordFeature, LowerCaseLemmaFeature, WordPairFeature)
 
   def createFeatures(doc: Document): Set[String] = {
-    creators.filter(_.hasDocumentFeatures).map(_.createFeatures(doc)).flatten.toSet ++
+    creators.filter(_.hasDocumentFeatures).flatMap(_.createFeatures(doc)).toSet ++
     doc.sentences.toList.flatten { sentence =>
-      creators.filter(_.hasSentenceFeatures).map(_.createFeatures(sentence)).flatten
+      creators.filter(_.hasSentenceFeatures).flatMap(_.createFeatures(sentence))
     }.toSet
   }
 }
@@ -35,7 +35,7 @@ object Util {
   )
 
   /* Filter out stop words */
-  def filterStopWords(l: Iterable[String]) = l.filterNot(s => stopWords.contains(s.toLowerCase))
+  def filterStopWords(l: Iterable[String]): Iterable[String] = l.filterNot(s => stopWords.contains(s.toLowerCase))
 }
 
 object WordFeature extends FeatureCreator {

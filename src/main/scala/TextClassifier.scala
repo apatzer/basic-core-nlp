@@ -24,7 +24,7 @@ class TextClassifier(trainingFile: String) {
   protected lazy val textClassifier: LinearClassifier[Classification, String] = build(trainingFile)
   protected lazy val proc = new CoreNLPProcessor()
 
-  def build(file: String) = {
+  def build(file: String): LinearClassifier[Classification, String] = {
 
     // Read in gold-set and annotate each example
     var goldSet = Source.fromFile(file).getLines().map(_.split("\t")).map { line =>
